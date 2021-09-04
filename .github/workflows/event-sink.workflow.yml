@@ -1,0 +1,21 @@
+name: Remote Dispatch Action Responder
+
+on:
+  repository_dispatch: { }
+
+permissions:
+  repository-projects: write
+
+jobs:
+  event-receiver:
+    runs-on: ubuntu-20.04
+    steps:
+      -
+        name: Update Report in Dashboard Repository
+        run: |
+          set +ex
+          echo "event data:"
+          echo "${EVENT_DATA?}"
+        env:
+          EVENT_DATA: ${{ toJSON(github.event) }}
+
